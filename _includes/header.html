@@ -33,20 +33,30 @@
         el.className = el.className.replace(reg, " js-enabled")
     }
 
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0; i<ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1);
+            if (c.indexOf(name) != -1) return c.substring(name.length, c.length);
+        }
+        return "";
+    }
     var viewport = document.querySelector('meta[name=viewport]');
-    var localstorage = localStorage.getItem('viewportwidth');
+    var cookie = getCookie('viewportwidth');
     var hash = window.location.hash;
-    if ( localstorage ) {
-        viewport.setAttribute('content', 'width=' + localstorage);
+    if ( cookie != '' ) {
+        viewport.setAttribute('content', 'width=' + cookie);
     }
     if ( hash && hash.indexOf('viewport') >= 1 ) {
         var width = hash.split('=').pop();
         if ( width == 'reset' ) {
-            localStorage.removeItem('viewportwidth');
+            document.cookie = 'viewportwidth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
             viewport.setAttribute('content', 'width=device-width, initial-scale=1.0');
         } else {
             viewport.setAttribute('content', 'width=' + width);
-            localStorage.setItem('viewportwidth', width);
+            document.cookie='viewportwidth=' + width + '; path=/';
         }
     }
     function setviewport() {
