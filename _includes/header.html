@@ -16,15 +16,43 @@
             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
                 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
         ga('create', 'UA-214238-5', 'auto');
         ga('send', 'pageview');
-
     </script>
 </head>
 
 <body class="no-js">
-<script type="text/javascript">function hasClass(e,t){return e.className.match(new RegExp("(\\s|^)"+t+"(\\s|$)"))}var el=document.body;var cl="no-js";if(hasClass(el,cl)){var reg=new RegExp("(\\s|^)"+cl+"(\\s|$)");el.className=el.className.replace(reg," js-enabled")}</script>
+<script type="text/javascript">
+    function hasClass(e, t) {
+        return e.className.match(new RegExp("(\\s|^)" + t + "(\\s|$)"))
+    }
+    var el = document.body;
+    var cl = "no-js";
+    if (hasClass(el, cl)) {
+        var reg = new RegExp("(\\s|^)" + cl + "(\\s|$)");
+        el.className = el.className.replace(reg, " js-enabled")
+    }
+
+    var viewport = document.querySelector('meta[name=viewport]');
+    var localstorage = localStorage.getItem('viewportwidth');
+    var hash = window.location.hash;
+    if ( localstorage ) {
+        viewport.setAttribute('content', 'width=' + localstorage);
+    }
+    if ( hash && hash.indexOf('viewport') >= 1 ) {
+        var width = hash.split('=').pop();
+        if ( width == 'reset' ) {
+            localStorage.removeItem('viewportwidth');
+            viewport.setAttribute('content', 'width=device-width, initial-scale=1.0');
+        } else {
+            viewport.setAttribute('content', 'width=' + width);
+            localStorage.setItem('viewportwidth', width);
+        }
+    }
+    function setviewport() {
+        location.reload();
+    }
+</script>
 
 <div class="header">
     <div class="container">
